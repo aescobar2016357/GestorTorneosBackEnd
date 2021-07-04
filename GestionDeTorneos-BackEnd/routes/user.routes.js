@@ -17,8 +17,5 @@ api.put('/updateUser/:idU', mdAuth.ensureAuth, userController.updateUser)
 api.delete('/deleteUser/:idU', mdAuth.ensureAuth, userController.deleteUser)
 api.get('/getUsers', [mdAuth.ensureAuth, mdAuth.ensureAuthAdmin], userController.getUsers)
 
-//image
-api.put('/:id/uploadImage', [mdAuth.ensureAuth, upload], userController.uploadImage);
-api.get('/getImage/:fileName', [upload], userController.getImage);
 
 module.exports = api;

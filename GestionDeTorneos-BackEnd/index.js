@@ -2,7 +2,7 @@
 
 var mongoose = require('mongoose');
 var app = require('./app')
-var port= 3200;
+var port= 3000;
 var inicioUsuario = require('./controllers/user.controller');
 
 mongoose.Promise = global.Promise;

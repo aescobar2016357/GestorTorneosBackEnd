@@ -2,7 +2,7 @@
 
 var jwt = require('jwt-simple');
 var moment = require('moment');
-var secretKey = 'encriptacion-Grupo#2';
+var secretKey = 'grupo1';
 
 exports.ensureAuth = (req, res, next)=>{
     if(!req.headers.authorization){
