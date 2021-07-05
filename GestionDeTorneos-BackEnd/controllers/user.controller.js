@@ -331,6 +331,45 @@ function getUsers(req, res) {
     })
 }
 
+function deleteUserAdmin (req, res){
+    var idUser = req.params.idUser
+
+    if(req.user.rol != "ROLE_ADMIN"){
+        return res.status(404).send({mensaje: 'No eres administrador, no puedes editar este usuario'})
+    }
+
+    User.findByIdAndDelete(idUser, (err, userDelete) =>{
+        if(err) return res.status(500).send({mensaje: 'Error en la peticion'})
+        if(!userDelete) return res.status(200).send({mensaje: 'No se ha podido eliminar usuario'})
+
+        return res.status(200).send({mensaje: 'Se elemino de forma correcta el usuario con id:' + idUser})
+    })
+}
+
+function updateUserAdmin (req, res){
+    var idUser = req.params.idUser
+    var params = req.body
+    delete params.password
+    if(req.user.rol != "ROLE_ADMIN"){
+        return res.status(404).send({mensaje: 'No eres administrador, no puedes editar este usuario'})
+    }
+    User.findByIdAndUpdate(idUser, params, {new: true}, (err, userUpdate)=>{
+        if(err) return res.status(500).send({mensaje: 'Error en la peticion'})
+        if(!userUpdate) return res.status(404).send({mensaje: 'No se ha podido actualizar el usuario'})
+
+        return res.status(200).send(userUpdate)
+    })
+}
+
+function getUserId (req, res){
+    var idUser = req.params.idUser
+
+    User.findOne({$or: [{_id: idUser}]}).exec((err, userGetId)=>{
+        if(err) return res.status(500).send({mensaje: 'Error en la peticion'})
+        if(!userGetId) return res.status(404).send({mensaje: 'Error al obtener los datos del usuario'})
+        return res.status(200).send(userGetId)
+    })
+}
 
 module.exports = {
     createInit,
@@ -339,5 +378,8 @@ module.exports = {
     saveUser,
     updateUser,
     deleteUser,
-    getUsers
+    getUsers,
+    deleteUserAdmin,
+    updateUserAdmin,
+    getUserId
 }
