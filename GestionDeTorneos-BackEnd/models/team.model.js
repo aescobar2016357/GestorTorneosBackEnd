@@ -6,6 +6,7 @@ var Schema = mongoose.Schema
 var teamSchema = Schema({
     name:String,
     logo:String,
+    country: String,
     golesFavor:Number,
     golesContra:Number,
     golesDiferencia:Number,

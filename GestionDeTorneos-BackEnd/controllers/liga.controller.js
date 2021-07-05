@@ -192,7 +192,7 @@ function deleteLiga(req, res) {
 }*/
 
 function getTeams(req, res) {
-    var ligaId = req.params.id;
+    var ligaId = req.params.idL;
 
     Liga.findById(ligaId).populate({
         path: 'teams',
