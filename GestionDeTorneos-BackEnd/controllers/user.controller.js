@@ -332,28 +332,28 @@ function getUsers(req, res) {
 }
 
 function deleteUserAdmin (req, res){
-    var idUser = req.params.idUser
+    var userId = req.params.idU
 
-    if(req.user.rol != "ROLE_ADMIN"){
+    if(req.user.role != "ROLE_ADMIN"){
         return res.status(404).send({mensaje: 'No eres administrador, no puedes editar este usuario'})
     }
 
-    User.findByIdAndDelete(idUser, (err, userDelete) =>{
+    User.findByIdAndDelete(userId, (err, userDelete) =>{
         if(err) return res.status(500).send({mensaje: 'Error en la peticion'})
         if(!userDelete) return res.status(200).send({mensaje: 'No se ha podido eliminar usuario'})
 
-        return res.status(200).send({mensaje: 'Se elemino de forma correcta el usuario con id:' + idUser})
+        return res.status(200).send({mensaje: 'Se elemino de forma correcta el usuario con id:' + userId})
     })
 }
 
 function updateUserAdmin (req, res){
-    var idUser = req.params.idUser
+    var userId = req.params.idU
     var params = req.body
     delete params.password
     if(req.user.rol != "ROLE_ADMIN"){
         return res.status(404).send({mensaje: 'No eres administrador, no puedes editar este usuario'})
     }
-    User.findByIdAndUpdate(idUser, params, {new: true}, (err, userUpdate)=>{
+    User.findByIdAndUpdate(userId, params, {new: true}, (err, userUpdate)=>{
         if(err) return res.status(500).send({mensaje: 'Error en la peticion'})
         if(!userUpdate) return res.status(404).send({mensaje: 'No se ha podido actualizar el usuario'})
 
@@ -362,9 +362,9 @@ function updateUserAdmin (req, res){
 }
 
 function getUserId (req, res){
-    var idUser = req.params.idUser
+    var userId = req.params.idU
 
-    User.findOne({$or: [{_id: idUser}]}).exec((err, userGetId)=>{
+    User.findOne({$or: [{_id: userId}]}).exec((err, userGetId)=>{
         if(err) return res.status(500).send({mensaje: 'Error en la peticion'})
         if(!userGetId) return res.status(404).send({mensaje: 'Error al obtener los datos del usuario'})
         return res.status(200).send(userGetId)
