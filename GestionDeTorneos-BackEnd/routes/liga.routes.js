@@ -10,6 +10,7 @@ var api = express.Router();
 
 api.post('/createLiga/:idU', [mdAuth.ensureAuth], ligaController.createLiga)
 api.get('/getTeams/:idL', [mdAuth.ensureAuth],ligaController.getTeams)
+api.get('/getLiga/:idUser', [mdAuth.ensureAuth], ligaController.getLiga)
 api.put('/:idU/updateLiga/:idL', mdAuth.ensureAuth, ligaController.updateLiga)
 api.put('/:idU/deleteLiga/:idL', mdAuth.ensureAuth, ligaController.deleteLiga)
 

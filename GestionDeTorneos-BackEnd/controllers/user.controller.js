@@ -5,7 +5,7 @@ var bcrypt = require('bcrypt-nodejs');
 var jwt = require('../services/jwt');
 var fs = require('fs');
 var path = require('path');
-const { update } = require('../models/user.model');
+const { update, findByIdAndUpdate } = require('../models/user.model');
 
 
 function createInit(req, res) {
@@ -16,8 +16,11 @@ function createInit(req, res) {
         } else if (found) {
             console.log('Usuario administrador ya creado')
         } else {
-            user.password = 'deportes123';
+            user.password = '123456';
             user.role = 'ROLE_ADMIN';
+            user.image = 'https://th.bing.com/th/id/OIP.G2F2-_qZDHU44SuyZYASowHaEn?pid=ImgDet&rs=1';
+
+
             bcrypt.hash(user.password, null, null, (err, passwordHash) => {
                 if (err) {
                     console.log('Error al encriptar la contraseña', err)
@@ -53,12 +56,8 @@ function login(req, res) {
                     if (err) {
                         return res.status(500).send({ message: 'Error general en la verificación de la contraseña' });
                     } else if (checkPassword) {
-                        if (params.gettoken) {
-                            delete userFind.password
+                        delete userFind.password
                             return res.send({ token: jwt.createToken(userFind), user: userFind });
-                        } else {
-                            return res.send({ token: jwt.createToken(userFind), user: userFind });
-                        }
                     } else {
                         return res.status(401).send({ message: 'Contrasea incorrecta' });
                     }
@@ -225,40 +224,17 @@ function updateUser(req, res) {
 
 function deleteUser(req, res) {
     let userId = req.params.idU;
-    let params = req.body;
 
-    if (userId != req.user.sub) {
-        res.status(403).send({ message: 'No tienes permisos para Eliminar otro usuario' });
-    } else {
-        User.findOne({ _id: userId }, (err, userFind) => {
-            if (err) {
-                res.status(500).send({ message: 'Error general' });
-                console.log(err);
-            } else if (userFind) {
-                bcrypt.compare(params.password, userFind.password, (err, passVerified) => {
-                    if (err) {
-                        res.status(500).send({ message: 'Error general al veficar la contraseña' })
-                        console.log(err)
-                    } else if (passVerified) {
-                        User.findByIdAndRemove(userId, (err, userRemoved) => {
-                            if (err) {
-                                res.status(500).send({ message: 'Error general al eliminar el usuario' });
-                                console.log(err);
-                            } if (userRemoved) {
-                                res.send({ message: 'Usuario eliminado', userRemoved })
-                            } else {
-                                res.send({ message: 'Usuario no eliminado' });
-                            }
-                        })
-                    } else {
-                        res.status(401).send({ message: 'Contraseña incorrecta' })
-                    }
-                })
-            } else {
-                res.status(404).send({ message: 'Usuario no existente' })
-            }
-        })
-    }
+    User.findByIdAndRemove(userId, (err, userRemoved) => {
+        if (err) {
+            res.status(500).send({ message: 'Error general al eliminar el usuario' });
+            console.log(err);
+        } if (userRemoved) {
+            res.send({ message: 'Usuario eliminado', userRemoved })
+        } else {
+            res.send({ message: 'Usuario no eliminado' });
+        }
+    })
 }
 
 /*function uploadImage(req, res) {
@@ -322,9 +298,8 @@ function getUsers(req, res) {
     User.find({}).exec((err, users) => {
         if (err) {
             res.status(500).send({ message: 'Error general al buscar usuarios' });
-            console.log(err)
         } else if (users) {
-            res.send({ message: 'Usuarios encontrados: ', users })
+           res.status(200).send(users);
         } else {
             res.send({ message: 'No existe ningun usuario' })
         }
@@ -332,39 +307,55 @@ function getUsers(req, res) {
 }
 
 function deleteUserAdmin (req, res){
-    var userId = req.params.idU
+    var idUser = req.params.idUser
+    var idUserDelete = req.params.idUserDelete
 
-    if(req.user.role != "ROLE_ADMIN"){
-        return res.status(404).send({mensaje: 'No eres administrador, no puedes editar este usuario'})
-    }
-
-    User.findByIdAndDelete(userId, (err, userDelete) =>{
+    User.findOne({$or: [{_id: idUser}]}).exec((err, userGetId)=>{
         if(err) return res.status(500).send({mensaje: 'Error en la peticion'})
-        if(!userDelete) return res.status(200).send({mensaje: 'No se ha podido eliminar usuario'})
-
-        return res.status(200).send({mensaje: 'Se elemino de forma correcta el usuario con id:' + userId})
+        if(!userGetId) return res.status(404).send({mensaje: 'Error al obtener los datos del usuario'})
+        
+        if(userGetId.role != "ROLE_ADMIN"){
+            return res.status(500).send({ message: "No tiene permisos para eliminar este usuario"})
+        }else{
+            User.findByIdAndDelete(idUserDelete, (err, userRemoved) => {
+                if (err) {
+                    res.status(500).send({ message: 'Error general al eliminar el usuario' });
+                    console.log(err);
+                } if (userRemoved) {
+                    res.send({ message: 'Usuario eliminado', userRemoved })
+                } else {
+                    res.send({ message: 'Usuario no eliminado' });
+                }
+            })
+        }
     })
 }
 
 function updateUserAdmin (req, res){
-    var userId = req.params.idU
+    var idUser = req.params.idUser
+    var idupdate = req.params.idupdate
     var params = req.body
-    delete params.password
-    if(req.user.rol != "ROLE_ADMIN"){
-        return res.status(404).send({mensaje: 'No eres administrador, no puedes editar este usuario'})
-    }
-    User.findByIdAndUpdate(userId, params, {new: true}, (err, userUpdate)=>{
-        if(err) return res.status(500).send({mensaje: 'Error en la peticion'})
-        if(!userUpdate) return res.status(404).send({mensaje: 'No se ha podido actualizar el usuario'})
-
-        return res.status(200).send(userUpdate)
+   
+    User.findOne({$or: [{_id: idUser}]}).exec((err, userGetId)=>{
+        if(err) return res.status(500).send({mensaje: 'Error en la peticion busqueda del usuario'})
+        if(!userGetId) return res.status(404).send({mensaje: 'Error al obtener los datos del usuario'})
+        
+        if(userGetId.role != "ROLE_ADMIN"){
+            return res.status(500).send({ message: "No tiene permisos para eliminar este usuario"})
+        }else{
+            User.findByIdAndUpdate(idupdate, params, { new: true }, (err, userUpdated) => {
+                if(err) return res.status(500).send({Mensaje: "Error en la peticion de edición"})
+                if(!userUpdated) return res.status(404).send({mensaje: "No se pudo actualizar tu usuario"})
+                return res.status(200).send(userUpdated)
+            })
+        }
     })
 }
 
 function getUserId (req, res){
-    var userId = req.params.idU
+    var idUser = req.params.idUser
 
-    User.findOne({$or: [{_id: userId}]}).exec((err, userGetId)=>{
+    User.findOne({$or: [{_id: idUser}]}).exec((err, userGetId)=>{
         if(err) return res.status(500).send({mensaje: 'Error en la peticion'})
         if(!userGetId) return res.status(404).send({mensaje: 'Error al obtener los datos del usuario'})
         return res.status(200).send(userGetId)

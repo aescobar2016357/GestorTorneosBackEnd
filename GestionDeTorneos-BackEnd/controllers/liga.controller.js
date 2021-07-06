@@ -210,9 +210,28 @@ function getTeams(req, res) {
     })
 }
 
+function getLiga(req, res){
+    var idUser = req.params.idUser
+    User.findOne({$or: [{_id: idUser}]}).exec((err, userGetId)=>{
+        if(err) return res.status(500).send({mensaje: 'Error en la peticion busqueda del usuario'})
+        if(!userGetId) return res.status(404).send({mensaje: 'Error al obtener los datos del usuario'})
+        
+        if(userGetId.role != "ROLE_ADMIN"){
+            return res.status(500).send({ message: "No tiene permisos para eliminar este usuario"})
+        }else{
+            Liga.find({}).exec((err, ligaFind) => {
+                if(err) return res.status(500).send({ message: 'Error en la petición de busqueda'})
+                if(!ligaFind) return res.status(404).send({mensaje: 'No se a podido obtener las ligas'})
+                return res.status(200).send(ligaFind)
+            })
+        }
+    })
+}
+
 module.exports = {
     createLiga,
     getTeams,
     updateLiga,
     deleteLiga,
+    getLiga
 }
