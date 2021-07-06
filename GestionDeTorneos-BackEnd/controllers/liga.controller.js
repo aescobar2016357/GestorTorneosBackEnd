@@ -185,7 +185,7 @@ function getLiga(req, res){
         if(!userGetId) return res.status(404).send({mensaje: 'Error al obtener los datos del usuario'})
         
         if(userGetId.role != "ROLE_ADMIN"){
-            return res.status(500).send({ message: "No tiene permisos para eliminar este usuario"})
+            return res.status(500).send({ message: "No tiene permisos para ver todas las ligas"})
         }else{
             Liga.find({}).exec((err, ligaFind) => {
                 if(err) return res.status(500).send({ message: 'Error en la petición de busqueda'})
@@ -196,6 +196,10 @@ function getLiga(req, res){
     })
 }
 
+function gertLigaId(req, res){
+    var idLiga = req.params.idLiga
+
+}
 
 module.exports = {
     createLiga,
