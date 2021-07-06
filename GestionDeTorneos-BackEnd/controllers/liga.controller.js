@@ -12,51 +12,35 @@ function createLiga(req, res) {
     var params = req.body;
     var userId = req.params.idU
 
-    if (userId != req.user.sub) {
-        return res.send({ message: 'No tienes permiso para agregar una liga' })
-    } else {
-        User.findById(userId, (err, userFind) => {
-            if (err) {
-                return res.status(500).send({ message: 'Error general' })
-            } else if (userFind) {
-                if (params.name && params.descripcion) {
-                    Liga.findOne({ name: params.name }, (err, ligaFind) => {
+    Liga.findOne({ name: params.name }, (err, ligaFind) => {
+        if (err) {
+            res.status(500).send({ message: "Error general" })
+        } else if (ligaFind) {
+            res.send({ message: "Nombre de liga ya en uso" })
+        } else {
+            liga.name = params.name;
+            liga.descripcion = params.descripcion;
+            liga.teamCount = 0;
+            liga.image = params.image;
+            liga.save((err, ligaSaved) => {
+                if (err) {
+                    res.status(500).send({ message: 'Error general' })
+                } else if (ligaSaved) {
+                    User.findByIdAndUpdate(userId, { $push: { ligas: ligaSaved._id } }, { new: true }, (err, ligaPush) => {
                         if (err) {
-                            res.status(500).send({ message: "Error general" })
-                        } else if (ligaFind) {
-                            res.send({ message: "Nombre de liga ya en uso" })
+                            return res.status(500).send({ message: 'Error general' })
+                        } else if (ligaPush) {
+                            return res.send({ message: 'Liga agregada con éxito!', ligaPush })
                         } else {
-                            liga.name = params.name;
-                            liga.descripcion = params.descripcion;
-                            liga.teamCount = 0;
-                            liga.image = params.image;
-                            liga.save((err, ligaSaved) => {
-                                if (err) {
-                                    res.status(500).send({ message: 'Error general' })
-                                } else if (ligaSaved) {
-                                    User.findByIdAndUpdate(userId, { $push: { ligas: ligaSaved._id } }, { new: true }, (err, ligaPush) => {
-                                        if (err) {
-                                            return res.status(500).send({ message: 'Error general' })
-                                        } else if (ligaPush) {
-                                            return res.send({ message: 'Liga agregada con éxito!', ligaPush })
-                                        } else {
-                                            return res.send({ message: 'No se agregó la liga' })
-                                        }
-                                    })
-                                } else {
-                                    res.send({ message: 'No se guado el equipo' });
-                                }
-                            })
+                            return res.send({ message: 'No se agregó la liga' })
                         }
                     })
                 } else {
-                    res.send({ message: "Ingresa todos los datos obligatorios" })
+                    res.send({ message: 'No se guado el equipo' });
                 }
-            } else {
-
-            }
-        })
-    }
+            })
+        }
+    })
 }
 
 function updateLiga(req, res) {
@@ -64,15 +48,7 @@ function updateLiga(req, res) {
     let ligaId = req.params.idL
     let update = req.body;
 
-    if (userId != req.user.sub) {
-        return res.send({ message: 'No tienes permiso para realizar esta acción' })
-    } else {
-        User.findById(userId, (err, userFind) => {
-            if (err) {
-                return res.status(500).send({ message: 'Error general' })
-            } else if (userFind) {
-                if (update.name) {
-                    Liga.findOne({ name: update.name }, (err, ligaFinded) => {
+    Liga.findOne({ name: update.name }, (err, ligaFinded) => {
                         if (err) {
                             return res.status(500).send({ message: 'Error general' })
                         } else if (ligaFinded) {
@@ -105,14 +81,6 @@ function updateLiga(req, res) {
                             })
                         }
                     })
-                } else {
-                    return res.send({ message: 'Ingresa todos los datos obligatorios' })
-                }
-            } else {
-                return res.status(404).send({ message: 'Usuario no encontrado' })
-            }
-        })
-    }
 }
 
 function deleteLiga(req, res) {
@@ -227,6 +195,7 @@ function getLiga(req, res){
         }
     })
 }
+
 
 module.exports = {
     createLiga,
