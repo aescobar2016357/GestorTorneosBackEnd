@@ -32,7 +32,31 @@ function createLiga(req, res) {
                         } else if (ligaPush) {
                             return res.send({ message: 'Liga agregada con éxito!', ligaPush })
                         } else {
+<<<<<<< Updated upstream
                             return res.send({ message: 'No se agregó la liga' })
+=======
+                            liga.name = params.name;
+                            liga.descripcion = params.descripcion;
+                            liga.teamCount = 0;
+                            liga.image = 'https://www.soyfutbol.com/__export/1618078302464/sites/debate/img/2021/04/10/la_liga_espaxa_tabla_posiciones_clasificacixn_general_fc_barcelona_real_madrid_atletico_madrid_crop1618078261996.jpg_1902800913.jpg';
+                            liga.save((err, ligaSaved) => {
+                                if (err) {
+                                    res.status(500).send({ message: 'Error general' })
+                                } else if (ligaSaved) {
+                                    User.findByIdAndUpdate(userId, { $push: { ligas: ligaSaved._id } }, { new: true }, (err, ligaPush) => {
+                                        if (err) {
+                                            return res.status(500).send({ message: 'Error general' })
+                                        } else if (ligaPush) {
+                                            return res.send({ message: 'Liga agregada con éxito!', ligaPush })
+                                        } else {
+                                            return res.send({ message: 'No se agregó la liga' })
+                                        }
+                                    })
+                                } else {
+                                    res.send({ message: 'No se guado el equipo' });
+                                }
+                            })
+>>>>>>> Stashed changes
                         }
                     })
                 } else {
@@ -178,8 +202,9 @@ function getTeams(req, res) {
     })
 }
 
-function getLiga(req, res){
+function getLiga(req, res) {
     var idUser = req.params.idUser
+<<<<<<< Updated upstream
     User.findOne({$or: [{_id: idUser}]}).exec((err, userGetId)=>{
         if(err) return res.status(500).send({mensaje: 'Error en la peticion busqueda del usuario'})
         if(!userGetId) return res.status(404).send({mensaje: 'Error al obtener los datos del usuario'})
@@ -192,12 +217,68 @@ function getLiga(req, res){
                 if(!ligaFind) return res.status(404).send({mensaje: 'No se a podido obtener las ligas'})
                 return res.status(200).send(ligaFind)
             })
+=======
+    User.findOne({ $or: [{ _id: idUser }] }).exec((err, userGetId) => {
+        if (err) return res.status(500).send({ mensaje: 'Error en la peticion busqueda del usuario' })
+        if (!userGetId) return res.status(404).send({ mensaje: 'Error al obtener los datos del usuario' })
+        Liga.find({}).exec((err, ligaFind) => {
+            if (err) return res.status(500).send({ message: 'Error en la petición de busqueda' })
+            if (!ligaFind) return res.status(404).send({ mensaje: 'No se a podido obtener las ligas' })
+            return res.status(200).send(ligaFind)
+        })
+
+    })
+}
+
+function getLigasAdmin(req, res) {
+    Liga.find({}).exec((err, users) => {
+        if (err) {
+            res.status(500).send({ message: 'Error general al buscar usuarios' });
+        } else if (users) {
+            res.status(200).send(users);
+        } else {
+            res.send({ message: 'No existe ningun usuario' })
+>>>>>>> Stashed changes
         }
     })
 }
 
+<<<<<<< Updated upstream
 function gertLigaId(req, res){
     var idLiga = req.params.idLiga
+=======
+function updateLigaAdmin(req, res) {
+    var ligaId = req.params.idL
+    var params = req.body
+
+    if (req.user.role != "ROLE_ADMIN") {
+        return res.status(500).send({ mensaje: 'No eres administrador no puedes editar esta liga' })
+    }
+
+    Liga.findByIdAndUpdate(ligaId, params, { new: true }, (err, updateLiga) => {
+        if (err) return res.status(500).send({ mensaje: 'Error en la peticion' })
+        if (!updateLiga) return res.status(404).send({ mensaje: 'No se puede atualizar liga' })
+
+        return res.status(200).send(updateLiga)
+    })
+
+}
+
+function deleteLigaAdmin(req, res) {
+    var ligaId = req.params.idL
+
+    if (req.user.role != "ROLE_ADMIN") {
+        return res.status(500).send({ mensaje: 'No eres administrador no puedes editar esta liga' })
+    }
+
+    Liga.findByIdAndDelete(ligaId, (err, ligaDelete) => {
+        if (err) return res.status(500).send({ mensaje: 'Error en la peticion' })
+        if (!ligaDelete) return res.status(200).send({ mensaje: 'No se ha podido eliminar la liga' })
+
+        return res.status(200).send({ mensaje: 'Se elemino de forma correcta la liga con id:' + ligaId })
+    })
+
+>>>>>>> Stashed changes
 
 }
 
@@ -206,5 +287,8 @@ module.exports = {
     getTeams,
     updateLiga,
     deleteLiga,
-    getLiga
+    getLiga,
+    getLigasAdmin,
+    deleteLigaAdmin,
+    updateLigaAdmin
 }
