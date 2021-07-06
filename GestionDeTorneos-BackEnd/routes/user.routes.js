@@ -18,7 +18,7 @@ api.delete('/deleteUser/:idU', mdAuth.ensureAuth, userController.deleteUser)
 api.get('/getUsers', [mdAuth.ensureAuth, mdAuth.ensureAuthAdmin], userController.getUsers)
 api.get('/getUsersID/:id', mdAuth.ensureAuth, userController.getUserId)
 api.put('/updateUserAdmin/:id', mdAuth.ensureAuth, userController.updateUserAdmin)
-api.delete('/deleteUserAdmin/:id/:id', mdAuth.ensureAuth, userController.deleteUserAdmin)
+api.delete('/deleteUserAdmin/:id/:idUser', mdAuth.ensureAuth, userController.deleteUserAdmin)
 
 
 module.exports = api;
