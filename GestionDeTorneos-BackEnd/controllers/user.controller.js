@@ -16,7 +16,7 @@ function createInit(req, res) {
         } else if (found) {
             console.log('Usuario administrador ya creado')
         } else {
-            user.password = 'admin';
+            user.password = 'deportes123';
             user.role = 'ROLE_ADMIN';
             bcrypt.hash(user.password, null, null, (err, passwordHash) => {
                 if (err) {
