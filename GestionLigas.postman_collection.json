@@ -18,7 +18,7 @@
 								"header": [
 									{
 										"key": "Authorization",
-										"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiI2MGUzMWQzMTMyZTU4MzRhOTA2ZDk5ODkiLCJuYW1lIjoiYWRtaW4iLCJyb2xlIjoiUk9MRV9BRE1JTiIsImlhdCI6MTYyNTU5MzI5NiwiZXhwIjoxNjI1NjIyMDk2fQ.TReLrSVKuiwddG1IYjpCb2d3tgS8UYIKt-EpeV-vOSU",
+										"value": "\"eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiI2MGUzMWQzMTMyZTU4MzRhOTA2ZDk5ODkiLCJuYW1lIjoiYWRtaW4iLCJyb2xlIjoiUk9MRV9BRE1JTiIsImlhdCI6MTYyNTY5Mzc5NCwiZXhwIjoxNjI1NzIyNTk0fQ.sUQh3ugpD-qgknkYCfww68sGdn-va__h_O8hcmRv0Sk",
 										"type": "text"
 									}
 								],
@@ -226,7 +226,7 @@
 								},
 								{
 									"key": "username",
-									"value": "aescobar",
+									"value": "aaescobar",
 									"type": "text"
 								},
 								{
@@ -265,12 +265,12 @@
 							"urlencoded": [
 								{
 									"key": "username",
-									"value": "aescobar",
+									"value": "admin",
 									"type": "text"
 								},
 								{
 									"key": "password",
-									"value": "123456",
+									"value": "admin",
 									"type": "text"
 								}
 							]
@@ -497,7 +497,7 @@
 						"header": [
 							{
 								"key": "Authorization",
-								"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiI2MGUzMjBkMTcyMzBjZDA1NTAyOTY4ZTkiLCJuYW1lIjoiYXhlbCIsImxhc3RuYW1lIjoiZXNjb2JhciIsImVtYWlsIjoiYSIsInJvbGUiOiJST0xFX1VTRVIiLCJpYXQiOjE2MjU1OTc1MTEsImV4cCI6MTYyNTYyNjMxMX0.n55uSznBEkvDwPEdfyiRTvirixFRdSsv5Songzb63MY",
+								"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiI2MGU2MWU5MjM1MTYzYTliNWNmMmFjOWMiLCJuYW1lIjoiYXhlbCIsImxhc3RuYW1lIjoiZXNjb2JhciIsImVtYWlsIjoiYSIsInJvbGUiOiJST0xFX1VTRVIiLCJpYXQiOjE2MjU2OTM4NTcsImV4cCI6MTYyNTcyMjY1N30.BrqT0Fi7jxk-mMzZ7WIJ9XSm0B0kLFYieinqJplD32g",
 								"type": "text"
 							}
 						],
@@ -506,7 +506,7 @@
 							"urlencoded": [
 								{
 									"key": "name",
-									"value": "nombre de liga",
+									"value": "ligaXD",
 									"type": "text"
 								},
 								{
@@ -530,7 +530,7 @@
 							"variable": [
 								{
 									"key": "idU",
-									"value": "60e320d17230cd05502968e9"
+									"value": "60e61e9235163a9b5cf2ac9c"
 								}
 							]
 						}
@@ -698,7 +698,7 @@
 						"header": [
 							{
 								"key": "Authorization",
-								"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiI2MGUzMjBkMTcyMzBjZDA1NTAyOTY4ZTkiLCJuYW1lIjoiYXhlbCIsImxhc3RuYW1lIjoiZXNjb2JhciIsImVtYWlsIjoiYSIsInJvbGUiOiJST0xFX1VTRVIiLCJpYXQiOjE2MjU1MDE0ODgsImV4cCI6MTYyNTUzMDI4OH0.eNa5HD3PILdaXDbUpO2Cz7nWpmI6YEM9oH9e9ynzVTo",
+								"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiI2MGU2MWU5MjM1MTYzYTliNWNmMmFjOWMiLCJuYW1lIjoiYXhlbCIsImxhc3RuYW1lIjoiZXNjb2JhciIsImVtYWlsIjoiYSIsInJvbGUiOiJST0xFX1VTRVIiLCJpYXQiOjE2MjU2OTM4NTcsImV4cCI6MTYyNTcyMjY1N30.BrqT0Fi7jxk-mMzZ7WIJ9XSm0B0kLFYieinqJplD32g",
 								"type": "text"
 							}
 						],
@@ -707,7 +707,7 @@
 							"urlencoded": [
 								{
 									"key": "name",
-									"value": "equipo1",
+									"value": "equipoXD4",
 									"type": "text"
 								},
 								{
@@ -737,11 +737,11 @@
 							"variable": [
 								{
 									"key": "idL",
-									"value": "60e32dadffd3b80a9463f472"
+									"value": "60e61ed835163a9b5cf2ac9e"
 								},
 								{
 									"key": "idU",
-									"value": "60e320d17230cd05502968e9"
+									"value": "60e61e9235163a9b5cf2ac9c"
 								}
 							]
 						}
@@ -854,7 +854,7 @@
 						"header": [
 							{
 								"key": "Authorization",
-								"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiI2MGUzMjBkMTcyMzBjZDA1NTAyOTY4ZTkiLCJuYW1lIjoiYXhlbCIsImxhc3RuYW1lIjoiZXNjb2JhciIsImVtYWlsIjoiYSIsInJvbGUiOiJST0xFX1VTRVIiLCJpYXQiOjE2MjU1MDM0MDQsImV4cCI6MTYyNTUzMjIwNH0.WCOYSkNoWHyMaIKJ5ak1WYUFq5Wza3kYQKeQo4J6X2c",
+								"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiI2MGU2MWU5MjM1MTYzYTliNWNmMmFjOWMiLCJuYW1lIjoiYXhlbCIsImxhc3RuYW1lIjoiZXNjb2JhciIsImVtYWlsIjoiYSIsInJvbGUiOiJST0xFX1VTRVIiLCJpYXQiOjE2MjU2OTM4NTcsImV4cCI6MTYyNTcyMjY1N30.BrqT0Fi7jxk-mMzZ7WIJ9XSm0B0kLFYieinqJplD32g",
 								"type": "text"
 							}
 						],
@@ -894,16 +894,61 @@
 							"variable": [
 								{
 									"key": "e1",
-									"value": "60e32fa740266f0ff46f41ed"
+									"value": "60e61f5935163a9b5cf2ac9f"
 								},
 								{
 									"key": "e2",
-									"value": "60e32faa40266f0ff46f41ee"
+									"value": "60e61f6435163a9b5cf2aca0"
 								},
 								{
 									"key": "liga",
-									"value": "60e32dadffd3b80a9463f472"
+									"value": "60e61ed835163a9b5cf2ac9e"
 								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Marcadores por Liga",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:3000/api/getMarcadoresLiga/:idL",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"getMarcadoresLiga",
+								":idL"
+							],
+							"variable": [
+								{
+									"key": "idL",
+									"value": "60e61ed835163a9b5cf2ac9e"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Marcadores",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:3000/api/getMarcadores",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"getMarcadores"
 							]
 						}
 					},
