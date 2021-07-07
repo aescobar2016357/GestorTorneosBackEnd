@@ -8,7 +8,7 @@ var ligaSchema = Schema({
     descripcion:String,
     image:String,
     teamCount:Number,
-    teams: [{type: Schema.ObjectId, ref:'team'}],
+    teams: [{type: Schema.ObjectId, ref:'team'}]
 });
 
 module.exports = mongoose.model('liga', ligaSchema)

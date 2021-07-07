@@ -132,53 +132,6 @@ function deleteLiga(req, res) {
 }
 
 
-/*function addTeams(req, res){
-    var ligaId = req.params.id
-    var params = req.body
-    let team = params._id
-
-    Team.findById(team, (err, teamFind)=>{
-        if(err){
-            res.status(500).send({message: 'Error general'})
-        }else if(teamFind){
-            Liga.findById(ligaId, (err, ligaFind)=>{
-                if(err){
-                    res.status(500).send({message: 'Error general'})
-                }else if(ligaFind){
-                    if(ligaFind.teamCount > 10){
-                        res.send({message: 'No se pueden tener más de 10 equipos en una liga'})
-                    }else{
-                        var liga = ligaFind.teamCount ++;
-                        let team = teamFind
-                        
-                        Liga.findByIdAndUpdate({_id: ligaId}, {$push:{teams: team._id}, liga}, {new: true}, (err, teamSaved)=>{
-                            if(err){
-                                res.status(500).send({message: 'Error general al guardar el team'})
-                            }else if(teamSaved){
-                                Liga.findByIdAndUpdate(ligaId, {$inc:{teamCount: +1}}, {new:true}, (err, aumento)=>{
-                                    if(err){
-                                        res.send({message: 'Error al incrementar'})
-                                    }else if(aumento){
-                                        res.send({message: 'Team agregado', aumento})
-                                    }else{
-                                        res.send({message:'No se incremento'})
-                                    }
-                                })
-                            }else{
-                                res.send({message: 'no se guardó el team'})
-                            }
-                        })
-                    }
-                }else{
-                    res.status(404).send({message: 'Liga no encontrada'})
-                }
-            })
-        }else{
-            res.status(404).send({message: 'Team no encontrado'})
-        }
-    })
-}*/
-
 function getTeams(req, res) {
     var ligaId = req.params.idL;
 
